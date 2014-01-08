@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+	<changeSet id="initial" author="aschilling">
+		<createTable tableName="CT_COMPANIES">
+			<column name="COM_ID" type="number(38,0)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="COM_NAME" type="varchar2(255)"></column>
+		</createTable>
+
+		<createSequence sequenceName="COM_SEQ" startValue="1"
+			incrementBy="1" />
+
+		<createTable tableName="CT_PERSONS">
+			<column name="PS_ID" type="number(38,0)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="PS_NAME" type="varchar2(1024)">
+				<constraints nullable="false" />
+			</column>
+			<column name="PS_SURNAME" type="varchar2(1024)">
+				<constraints nullable="false" />
+			</column>
+			<column name="PS_COM_ID" type="number(38,0)">
+			</column>
+		</createTable>
+
+		<createSequence sequenceName="PS_SEQ" startValue="1"
+			incrementBy="1" />
+
+		<addForeignKeyConstraint constraintName="PS_COMPANY_FK"
+			referencedTableName="CT_COMPANIES" baseColumnNames="PS_COM_ID"
+			baseTableName="CT_PERSONS" referencedColumnNames="COM_ID" />
+
+		<addUniqueConstraint columnNames="PS_NAME, PS_SURNAME"
+			tableName="CT_PERSONS" />
+	</changeSet>
+	<changeSet id="tag_initial" author="aschilling">
+		<tagDatabase tag="initial" />
+	</changeSet>
+</databaseChangeLog>

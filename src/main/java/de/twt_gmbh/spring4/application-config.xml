@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:data="http://www.springframework.org/schema/data/jpa"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/data/jpa
+    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<data:repositories base-package="de.twt_gmbh.spring4.repositories" />
+
+	<bean name="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	</bean>
+
+	<bean id="Repositories" class="de.twt_gmbh.spring4.service.Repositories">
+		<property name="personRepository" ref="personRepository" />
+		<property name="companyRepository" ref="companyRepository" />
+	</bean>
+
+	<bean id="JpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="database" value="H2" />
+		<property name="showSql" value="true" />
+	</bean>
+
+	<bean id="DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="org.h2.Driver" />
+		<property name="jdbcUrl" value="jdbc:h2:mem:DB_CLOSE_DELAY=-1" />
+		<property name="user" value="sa" />
+		<property name="password" value="" />
+
+		<property name="acquireIncrement" value="1" />
+		<property name="minPoolSize" value="1" />
+		<property name="maxPoolSize" value="4" />
+	</bean>
+
+	<bean id="EntityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="packagesToScan" value="de.twt_gmbh.spring4.model" />
+		<property name="jpaVendorAdapter" ref="JpaVendorAdapter" />
+		<property name="dataSource" ref="DataSource" />
+	</bean>
+	
+	<import resource="liquibase.xml"/>
+</beans>
