@@ -93,6 +93,7 @@ public class TestApp
     hansWurst.setName( "Hans" );
     hansWurst.setSurname( "Wurst" );
     hansWurst.setCompany( twt );
+    hansWurst.setAge( 31L );
     personRepo.save( hansWurst );
 
     Assert.assertEquals( 1L, companyRepo.count() );

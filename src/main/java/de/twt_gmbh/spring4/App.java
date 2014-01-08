@@ -38,6 +38,7 @@ public class App
     hansWurst.setName( "Hans" );
     hansWurst.setSurname( "Wurst" );
     hansWurst.setCompany( twt );
+    hansWurst.setAge( 31L );
     personRepo.save( hansWurst );
     LOGGER.debug( "Number of persons: " + personRepo.count() );
 

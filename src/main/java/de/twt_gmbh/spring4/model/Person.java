@@ -31,6 +31,9 @@ public class Person
   @Column(name = "PS_SURNAME")
   private String surname;
 
+  @Column(name = "PS_AGE")
+  private Long age;
+
   @ManyToOne
   @JoinColumn(name = "PS_COM_ID")
   private Company company;
@@ -39,7 +42,7 @@ public class Person
   @Override
   public int hashCode()
   {
-    return Objects.hashCode( id, name, surname, company );
+    return Objects.hashCode( id, name, surname, age, company );
   }
 
 
@@ -108,5 +111,17 @@ public class Person
   public void setCompany( final Company company )
   {
     this.company = company;
+  }
+
+
+  public Long getAge()
+  {
+    return age;
+  }
+
+
+  public void setAge( final Long age )
+  {
+    this.age = age;
   }
 }
